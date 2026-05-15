@@ -7,4 +7,4 @@ binding = "USER_DATA"
 id = "f812f1ba44ef48e8afb65af31185f806"
 
 [env.production]
-vars = { BOT_TOKEN = "8611513968:AAEH6Sq6fW8iZICZFYaVsAWent6scurthV4", REQUIRED_CHANNEL = "BlackArsenalStore" }
+vars = { BOT_TOKEN = "", REQUIRED_CHANNEL = "BlackArsenalStore" }
