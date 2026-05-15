@@ -34,12 +34,12 @@ const fcProducts = [
 
 // قائمة الأدوات
 const tools = [
-  { id: 'phoneinfoga', name: '📞 جمع معلومات رقم هاتف', price: 'FREE' },
-  { id: 'email_osint', name: '📧 جمع معلومات إيميل', price: 'FREE' },
-  { id: 'instagram_hack', name: '📸 اختراق انستا', price: '$20' },
-  { id: 'camera_hack', name: '📷 اختراق كاميرا', price: '$30' },
-  { id: 'phone_hack', name: '📱 اختراق هواتف', price: '$50' },
-  { id: 'termux_tools', name: '💻 تيرمكس فيد', price: 'FREE' }
+  { id: 'phoneinfoga', name: '📞 جمع معلومات رقم هاتف', price: 'FREE', link: 'https://github.com/sundowndev/phoneinfoga' },
+  { id: 'email_osint', name: '📧 جمع معلومات إيميل', price: 'FREE', link: 'https://github.com/ilyassR171194/black-arsenal-bot' },
+  { id: 'instagram_hack', name: '📸 اختراق انستا', price: '$20', link: null },
+  { id: 'camera_hack', name: '📷 اختراق كاميرا', price: '$30', link: null },
+  { id: 'phone_hack', name: '📱 اختراق هواتف', price: '$50', link: null },
+  { id: 'termux_tools', name: '💻 تيرمكس فيد', price: 'FREE', link: 'https://github.com/ilyassR171194' }
 ];
 
 // واجهات الكيبورد
@@ -215,9 +215,9 @@ export default {
           if (text === '/start') {
             if (!user.captchaPassed) {
               const captcha = generateCaptcha(chatId);
-              await sendMessage(chatId, `🌟 *مرحباً بك في متجر السوري BLACK* 🌟\n\nالمتجر الأقوى والأرخص\nكل ما تحتاج بمكان واحد\nالثقة والأمان هدفنا 😊\n\n🛡️ *تحقق أمني:*\n${captcha.question}`, env.BOT_TOKEN);
+              await sendMessage(chatId, `🌟 *مرحباً بك في Black Ilyass* 🌟\n\nالمتجر الأقوى والأرخص\nكل ما تحتاج بمكان واحد\nالثقة والأمان هدفنا 😊\n\n🛡️ *تحقق أمني:*\n${captcha.question}`, env.BOT_TOKEN);
             } else {
-              await sendMessage(chatId, `🎉 *أهلاً وسهلاً* ${username}!\n\nشكراً لاختيار متجرنا 😊\nنتمنى لك وقتاً ممتعاً 😍\n\nرصيدك الحالي: $${user.balance.toFixed(2)}`, env.BOT_TOKEN, mainKeyboard);
+              await sendMessage(chatId, `🎉 *أهلاً وسهلاً* ${username}!\n\nشكراً لاختيار Black Ilyass 😊\nنتمنى لك وقتاً ممتعاً 😍\n\nرصيدك الحالي: $${user.balance.toFixed(2)}`, env.BOT_TOKEN, mainKeyboard);
             }
           }
           else if (text === '🛒 المنتجات') {
@@ -277,10 +277,17 @@ export default {
             await sendMessage(chatId, '🛠️ *الأدوات:*', env.BOT_TOKEN, toolsKeyboard);
           }
           else if (data === 'apps_free') {
-            await sendMessage(chatId, '📱 *تطبيقات مجانية:*\n\n- Black Arsenal (Termux)\n- PhoneInfoga\n- OSINT Tools\n\nرابط التحميل: https://github.com/ilyassR171194', env.BOT_TOKEN);
+            let msg = `📱 *تطبيقات مجانية:*\n\n`;
+            for (const tool of tools) {
+              if (tool.price === 'FREE' && tool.link) {
+                msg += `🔧 *${tool.name}*\n${tool.link}\n\n`;
+              }
+            }
+            msg += `🔗 *جميع مشاريعي:*\nhttps://github.com/ilyassR171194`;
+            await sendMessage(chatId, msg, env.BOT_TOKEN);
           }
           else if (data === 'apps_paid') {
-            await sendMessage(chatId, '💰 *تطبيقات مدفوعة:*\n\nللشراء، تواصل مع الدعم.', env.BOT_TOKEN);
+            await sendMessage(chatId, '💰 *تطبيقات مدفوعة:*\n\nللشراء، تواصل مع الدعم.\n@BlackArsenalSupport', env.BOT_TOKEN);
           }
           else if (data === 'daily_gift') {
             const today = new Date().toDateString();
@@ -320,7 +327,13 @@ export default {
             const toolId = data.replace('tool_', '');
             const tool = tools.find(t => t.id === toolId);
             if (tool) {
-              await sendMessage(chatId, `🛠️ *${tool.name}*\n💰 السعر: ${tool.price}\n\nللوصول إلى الأداة، تواصل مع الدعم.`, env.BOT_TOKEN);
+              let msg = `🛠️ *${tool.name}*\n💰 السعر: ${tool.price}\n\n`;
+              if (tool.link) {
+                msg += `🔗 *رابط التحميل:*\n${tool.link}`;
+              } else {
+                msg += `للوصول إلى الأداة، تواصل مع الدعم.\n@BlackArsenalSupport`;
+              }
+              await sendMessage(chatId, msg, env.BOT_TOKEN);
             }
           }
           
